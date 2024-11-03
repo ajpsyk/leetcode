@@ -47,4 +47,21 @@ from typing import List
 
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        return 0
+        size = len(nums)
+
+        for i in range(len(nums)):
+            current_num = nums[i]
+            for j in range(i + 1, len(nums)):
+                if current_num == nums[j]:
+                    for k in range(j + 1, len(nums)):
+                        nums[k - 1] = nums[k]
+                        size = size - 1
+        return size
+
+
+Solution = Solution()
+arr1 = [1,1,2]
+arr2 = [0,0,1,1,1,2,2,3,3,4]
+print(Solution.removeDuplicates([1,1,2]), arr1)
+print(Solution.removeDuplicates([0,0,1,1,1,2,2,3,3,4]), arr2)
+
