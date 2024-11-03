@@ -49,17 +49,16 @@ class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         left_pointer = 1
 
-        for right_pointer in range(left_pointer, len(nums)):
-            if nums[left_pointer] != nums[right_pointer]:
+        for right_pointer in range(1, len(nums)):
+            if nums[right_pointer] != nums[right_pointer - 1]:
                 nums[left_pointer] = nums[right_pointer]
                 left_pointer = left_pointer + 1
-                right_pointer = left_pointer
         return left_pointer
 
 
 Solution = Solution()
-arr1 = [1,1,2]
-arr2 = [0,0,1,1,1,2,2,3,3,4]
-print(Solution.removeDuplicates([1,1,2]), arr1)
-print(Solution.removeDuplicates([0,0,1,1,1,2,2,3,3,4]), arr2)
+list1: List[int] = [1,1,2]
+list2: List[int] = [0,0,1,1,1,2,2,3,3,4]
+print(Solution.removeDuplicates(list1), list1)
+print(Solution.removeDuplicates(list2), list2)
 
