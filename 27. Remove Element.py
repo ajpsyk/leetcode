@@ -50,15 +50,13 @@ from typing import List
 
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
-        size = len(nums)
-        for i in range(size):
-            if nums[i] == val:
-                for j in range(i + 1, len(nums)):
-                    nums[j - 1] = nums[j]
-                nums[size - 1] = 0
-                size = size - 1
+        left = 0
+        for right in range(left, len(nums)):
+            if nums[right] != val:
+                nums[left] = nums[right]
+                left = left + 1
 
-        return size
+        return left
 
 Solution = Solution()
 List1: List[4] = [3,2,2,3]
