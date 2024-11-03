@@ -47,16 +47,14 @@ from typing import List
 
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        size = len(nums)
+        left_pointer = 1
 
-        for i in range(len(nums)):
-            current_num = nums[i]
-            for j in range(i + 1, len(nums)):
-                if current_num == nums[j]:
-                    for k in range(j + 1, len(nums)):
-                        nums[k - 1] = nums[k]
-                        size = size - 1
-        return size
+        for right_pointer in range(left_pointer, len(nums)):
+            if nums[left_pointer] != nums[right_pointer]:
+                nums[left_pointer] = nums[right_pointer]
+                left_pointer = left_pointer + 1
+                right_pointer = left_pointer
+        return left_pointer
 
 
 Solution = Solution()
