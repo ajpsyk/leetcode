@@ -42,7 +42,7 @@ The index i provided to get(int i) and set(int i) is guaranteed to be greater th
 class DynamicArray:
 
     def __init__(self, capacity: int):
-        self.arr = []
+        self.arr = [0] * capacity
         self.capacity = capacity
         self.size = 0
 
@@ -55,7 +55,7 @@ class DynamicArray:
     def pushback(self, n: int) -> None:
         if self.getSize() == self.getCapacity():
             self.resize()
-        self.arr.append(n)
+        self.arr[self.size] = n
         self.size = self.size + 1
 
     def popback(self) -> int:
@@ -65,7 +65,11 @@ class DynamicArray:
         return value
 
     def resize(self) -> None:
+        new_arr = [0] * self.capacity * 2
         self.capacity = self.capacity * 2
+        for i in range(self.size):
+            new_arr[i] = self.arr[i]
+        self.arr = new_arr
 
     def getSize(self) -> int:
         return self.size
