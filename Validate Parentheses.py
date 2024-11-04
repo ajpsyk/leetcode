@@ -34,23 +34,18 @@ Constraints:
 class Solution:
     def isValid(self, s: str) -> bool:
         stack = []
-        opening_paren = '({['
-        closing_paren = ')}]'
+        hashMap = {")": "(", "]": "[", "}": "{"}
 
-        for i in range(len(s)):
-            char = s[i]
-            if char in opening_paren:
-                stack.append(char)
-            elif char in closing_paren:
-                if len(stack) == 0:
-                    return False
-                peek = stack[len(stack) - 1]
-                if closing_paren.index(char) != opening_paren.index(peek):
-                    return False
-                else:
+        for char in s:
+            if char in hashMap:
+                if stack and stack[-1] == hashMap[char]:
                     stack.pop()
+                else:
+                    return False
+            else:
+                stack.append(char)
 
-        if len(stack) != 0:
+        if stack:
             return False
 
         return True
