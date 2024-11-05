@@ -32,29 +32,21 @@ class Solution:
         if head is None:
             return head
 
-        curr_node = head
-        stack = []
+        # initalize a current and previous
+        curr = head
+        prev = None
 
-        # traverse over list adding each element to stack
-        # stop once last element is reached (its next element is None)
-        while curr_node.next is not None:
-            stack.append(curr_node)
-            curr_node = curr_node.next
+        while curr is not None:
+            # next is curr.next
+            next = curr.next
+            # curr.next is previous
+            curr.next = prev
+            # prev is curr
+            prev = curr
+            # curr is next
+            curr = next
 
-
-        # store current node as new head
-        new_head = curr_node
-
-        while len(stack) > 0:
-            # pop from stack until empty
-            # make current node's next the popped value
-            curr_node.next = stack.pop()
-
-            # advance current node to next
-            curr_node = curr_node.next
-
-        curr_node.next = None
-        return new_head
+        return prev
 
 
 solution = Solution()
