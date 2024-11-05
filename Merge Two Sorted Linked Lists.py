@@ -38,7 +38,46 @@ class ListNode:
 
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        return ListNode()
+        # empty list cases
+        if list1 is None:
+            return list2
+
+        if list2 is None:
+            return list1
+
+        # initalize head to lowest of both heads, prioritize list1 if equal
+        # initialze pointer to next value of lower head
+        # initialize pointer to higher head
+        if list2.val < list1.val:
+            head = list2
+            curr1 = list1
+            curr2 = list2.next
+        else:
+            head = list1
+            curr1 = list1.next
+            curr2 = list2
+
+
+        # initialize current to head
+        curr = head
+         # repeat until both pointers are null
+        while curr1 is not None or curr2 is not None:
+            # compare pointer values
+            # current.next equals lower or non null pointer
+            # lower pointer equals lower pointer's next
+            # current equals current's next
+            if curr1 is None or (curr2 is not None and curr2.val < curr1.val):
+                curr.next = curr2
+                curr2 = curr2.next
+            elif curr2 is None or (curr1 is not None and curr1.val <= curr2.val):
+                curr.next = curr1
+                curr1 = curr1.next
+
+            curr = curr.next
+
+
+
+        return head
 
 solution = Solution()
 list1node1 = ListNode(1)
