@@ -44,13 +44,60 @@ At most 5000 calls will be made to visit, back, and forward.
 class BrowserHistory:
 
     def __init__(self, homepage: str):
+        # create a dummy head and tail
+        self.head = Link("head")
+        self.tail = Link("tail")
+        # add homepage between them
+        home = Link(homepage)
+        # set their next and prev pointers
+        self.head.next = home
+        self.tail.prev = home
+        home.prev = self.head
+        home.next = self.tail
+        # current link set to home Link
+        self.curr = home
 
     def visit(self, url: str) -> None:
+        # add to end of current link
+        # create new Link
+        new_link = Link(url)
+        # previous points to current link
+        new_link.prev = self.curr
+        # next points to tail
+        new_link.next = self.tail
+        # current's next points to new Link
+        self.curr.next = new_link
+        # tail.prev points to new Link
+        self.tail.prev = new_link
+        # current Link set to new node
+        self.curr = new_link
 
     def back(self, steps: int) -> str:
+        # if current link's previous val is not "head"
+        while self.curr.prev.val != "head" and steps > 0:
+            # current link is link.prev
+            self.curr = self.curr.prev
+            # return current link.val
+            steps -= 1
+        return self.curr.val
 
     def forward(self, steps: int) -> str:
+        # if current link's next val is not "tail"
+        while self.curr.next.val != "tail" and steps > 0:
+            # current link is link.next
+            self.curr = self.curr.next
+            steps -= 1
+            # return link.val
+        return self.curr.val
 
+
+# create a Link class
+class Link:
+    # holds the link, previous pointer and next pointer
+    def __init__(self, val: int):
+        self.val = val
+        self.prev = None
+        self.next = None
 # Your BrowserHistory object will be instantiated and called as such:
 # obj = BrowserHistory(homepage)
 # obj.visit(url)
