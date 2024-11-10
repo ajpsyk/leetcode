@@ -42,3 +42,29 @@ students[i] is 0 or 1.
 
 class Solution:
     def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
+        # declare queue length
+        queue_length = len(students)
+        # declare hungry students at zero
+        hungry_students = 0
+        # while there are students in queue and hungry students doesn't equal length
+        current_student = 0
+        current_sandwich = 0
+        while queue_length > 0 and hungry_students != queue_length:
+            # if current student doesn't equal sandwiches at top
+            if students[current_student] != sandwiches[current_sandwich]:
+                # append student list with current index
+                students.append(students[current_student])
+                # increment hungry
+                hungry_students += 1
+            # else
+            else:
+                # increment sandwich index
+                current_sandwich += 1
+                # length gets decremented
+                queue_length -= 1
+                # hungry students goes to zero
+                hungry_students = 0
+            current_student += 1
+
+            # return hungry students
+        return hungry_students
