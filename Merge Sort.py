@@ -33,49 +33,60 @@ class Pair:
     def __init__(self, key: int, value: str):
         self.key = key
         self.value = value
+
+
 class Solution:
-    def mergeSort(self, pairs: List[Pair], start=-1, end=-1) -> List[Pair]:
+    # Implementation of Merge Sort
+    def mergeSort(self, pairs: List[Pair]) -> List[Pair]:
+        return self.mergeSortHelper(pairs, 0, len(pairs) - 1)
 
-        # calculate start and end index if initial call
-        if start == -1:
-            start = 0
-            end = len(pairs) - 1
-
-        # case: list is 1 element or less
-        if end - start <= 1:
+    def mergeSortHelper(self, pairs: List[Pair], s: int, e: int) -> List[Pair]:
+        if e - s + 1 <= 1:
             return pairs
-        # case: list is greater than 1 element
-        # calculate middle index
-        middle = (end - start) // 2
-        # recursivley call left
-        left = self.mergeSort(pairs, start, middle)
-        # recursivley call right
-        right = self.mergeSort(pairs, middle + 1, end)
-        # merge left and right
-        # create new list
-        new_list = []
-        # pointer to first element of array
-        curr_new_index = 0
-        # set a pointer to start of left and right
-        curr_left_index = start
-        curr_right_index = middle + 1
-        # while left and right pointer are at valid indices
-        while curr_left_index <= middle and curr_right_index <= end:
-            # if element at left pointer is less than or equal to right pointer
-            if pairs[curr_left_index].key <= pairs[curr_right_index].key:
-                # append left pointer element to new list
-                new_list.append(pairs[curr_left_index])
-                # advance left pointer
-                curr_left_index += 1
-            # else
+
+        # The middle index of the array
+        m = (s + e) // 2
+
+        # Sort the left half
+        self.mergeSortHelper(pairs, s, m)
+
+        # Sort the right half
+        self.mergeSortHelper(pairs, m + 1, e)
+
+        # Merge sorted halfs
+        self.merge(pairs, s, m, e)
+
+        return pairs
+
+    # Merge in-place
+    def merge(self, arr: List[Pair], s: int, m: int, e: int) -> None:
+        # Copy the sorted left & right halfs to temp arrays
+        L = arr[s: m + 1]
+        R = arr[m + 1: e + 1]
+
+        i = 0  # index for L
+        j = 0  # index for R
+        k = s  # index for arr
+
+        # Merge the two sorted halfs into the original array
+        while i < len(L) and j < len(R):
+            if L[i].key <= R[j].key:
+                arr[k] = L[i]
+                i += 1
             else:
-                # append right pointer element to new list
-                new_list.append(pairs[curr_left_index])
-                # advance right pointer
-                curr_right_index += 1
-            curr_new_index += 1
-        # return new list
-        return new_list
+                arr[k] = R[j]
+                j += 1
+            k += 1
+
+        # One of the halfs will have elements remaining
+        while i < len(L):
+            arr[k] = L[i]
+            i += 1
+            k += 1
+        while j < len(R):
+            arr[k] = R[j]
+            j += 1
+            k += 1
 
 solution = Solution()
 solution.mergeSort([(5, "apple"), (2, "banana"), (9, "cherry"), (1, "date"), (9, "elderberry")])
