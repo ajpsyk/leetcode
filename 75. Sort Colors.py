@@ -30,6 +30,11 @@ Follow up: Could you come up with a one-pass algorithm using only constant extra
 
 class Solution:
     def sortColors(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
+        counts = [0, 0, 0]
+        for i in range(len(nums)):
+            counts[nums[i]] += 1
+        nums_index = 0
+        for i in range(len(counts)):
+            for j in range(counts[i]):
+                nums[nums_index] = i
+                nums_index += 1
